@@ -1,0 +1,58 @@
+BoxLayout:
+    orientation: 'vertical'
+    BoxLayout:
+
+        Label:
+            id: output_label
+            text: 'Current Trip Location:\n' +  app.current_location()
+            size: 350, 50
+
+    BoxLayout:
+
+        size: 350, 150
+        orientation: 'horizontal'
+        Spinner:
+            id: country_selection
+            values: app.location_list
+            on_text: app.currency_conversion(self.text)
+
+        TextInput:
+            disabled: True
+            id: target_to_home
+            on_text_validate: app.convert_to_home(args[0])
+            on_text: status.text=""
+            multiline: False
+
+
+    BoxLayout:
+        size: 350, 150
+        orientation: 'horizontal'
+        Label:
+            text: app.trip_origin
+
+        TextInput:
+            disabled: True
+            id: home_to_target
+            on_text_validate: app.convert_to_target(args[0])
+            on_text: status.text=""
+            multiline: False
+
+    BoxLayout:
+        Label:
+            id: date_label
+            size: 350, 300
+            text: 'Today is: \n' + app.todays_date()
+            font_size: 42
+
+
+
+    BoxLayout:
+        size: 350, 50
+        orientation: 'horizontal'
+        Label:
+            id: status
+            text: app.status_label()
+
+        Button:
+            text: 'Update Currency'
+            on_press: app.update_currency_conversion(country_selection.text)
